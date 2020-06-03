@@ -117,11 +117,11 @@ function Profile() {
     })
   }
 
-  if (!isLoading && notFound) {
+  if (!state.isLoading && state.notFound) {
     return <NotFound />
   }
 
-  if (isLoading)
+  if (state.isLoading)
     return (
       <Page>
         <LoadingDotsIcon />
