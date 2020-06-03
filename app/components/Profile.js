@@ -110,11 +110,7 @@ function Profile() {
   }
 
   if (!state.profileData) {
-    return (
-      <Page title="Profile Not Found">
-        <NotFound />
-      </Page>
-    )
+    return <NotFound />
   }
 
   return (
