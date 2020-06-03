@@ -8,6 +8,7 @@ import { useImmer } from "use-immer"
 import ProfileFollowers from "./ProfileFollowers"
 import ProfileFollowing from "./ProfileFollowing"
 import NotFound from "./NotFound"
+import LoadingDotsIcon from "./LoadingDotsIcon"
 
 function Profile() {
   const { username } = useParams()
@@ -22,6 +23,7 @@ function Profile() {
       isFollowing: false,
       counts: { postCount: "", followerCount: "", followingCount: "" },
     },
+    isLoading: true,
     notFound: false,
   })
 
@@ -34,6 +36,7 @@ function Profile() {
         setState((draft) => {
           if (response.data) {
             draft.profileData = response.data
+            draft.isLoading = false
           } else {
             draft.notFound = true
           }
@@ -114,9 +117,16 @@ function Profile() {
     })
   }
 
-  if (state.notFound) {
+  if (!isLoading && notFound) {
     return <NotFound />
   }
+
+  if (isLoading)
+    return (
+      <Page>
+        <LoadingDotsIcon />
+      </Page>
+    )
 
   return (
     <Page title={`${username}'s Profile`}>
