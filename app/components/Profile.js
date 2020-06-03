@@ -7,6 +7,7 @@ import ProfilePosts from "./ProfilePosts"
 import { useImmer } from "use-immer"
 import ProfileFollowers from "./ProfileFollowers"
 import ProfileFollowing from "./ProfileFollowing"
+import NotFound from "./NotFound"
 
 function Profile() {
   const { username } = useParams()
@@ -21,6 +22,7 @@ function Profile() {
       isFollowing: false,
       counts: { postCount: "", followerCount: "", followingCount: "" },
     },
+    notFound: false,
   })
 
   useEffect(() => {
@@ -30,7 +32,11 @@ function Profile() {
       try {
         const response = await Axios.post(`/profile/${username}`, { token: appState.user.token }, { cancelToken: ourRequest.token })
         setState((draft) => {
-          draft.profileData = response.data
+          if (response.data) {
+            draft.profileData = response.data
+          } else {
+            draft.notFound = true
+          }
         })
       } catch (e) {
         console.log("There was a problem or the request was canceled")
@@ -106,6 +112,14 @@ function Profile() {
     setState((draft) => {
       draft.stopFollowingRequestCount++
     })
+  }
+
+  if (state.notFound) {
+    return (
+      <Page title="Profile Not Found">
+        <NotFound />
+      </Page>
+    )
   }
 
   return (

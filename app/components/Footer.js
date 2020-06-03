@@ -20,7 +20,7 @@ function Footer() {
       <p className="m-0">
         Copyright &copy; 2020{" "}
         <Link to="/" className="text-muted">
-          ComplexApp
+          AlpinoMedia
         </Link>
         . All rights reserved.
       </p>
