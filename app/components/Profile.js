@@ -117,16 +117,16 @@ function Profile() {
     })
   }
 
-  if (!state.isLoading && state.notFound) {
-    return <NotFound />
-  }
-
   if (state.isLoading)
     return (
       <Page>
         <LoadingDotsIcon />
       </Page>
     )
+
+  if (state.notFound) {
+    return <NotFound />
+  }
 
   return (
     <Page title={`${username}'s Profile`}>
