@@ -22,7 +22,6 @@ function Profile() {
       isFollowing: false,
       counts: { postCount: "", followerCount: "", followingCount: "" },
     },
-    notFound: false,
   })
 
   useEffect(() => {
@@ -32,11 +31,7 @@ function Profile() {
       try {
         const response = await Axios.post(`/profile/${username}`, { token: appState.user.token }, { cancelToken: ourRequest.token })
         setState((draft) => {
-          if (response.data) {
-            draft.profileData = response.data
-          } else {
-            draft.notFound = true
-          }
+          draft.profileData = response.data
         })
       } catch (e) {
         console.log("There was a problem or the request was canceled")
@@ -114,7 +109,7 @@ function Profile() {
     })
   }
 
-  if (state.notFound) {
+  if (!state.profileData) {
     return (
       <Page title="Profile Not Found">
         <NotFound />
@@ -123,7 +118,7 @@ function Profile() {
   }
 
   return (
-    <Page title="Profile Screen">
+    <Page title={`${username}'s Profile`}>
       <h2>
         <img className="avatar-small" src={state.profileData.profileAvatar} /> {state.profileData.profileUsername}
         {appState.loggedIn && !state.profileData.isFollowing && appState.user.username != state.profileData.profileUsername && state.profileData.profileUsername != "..." && (
