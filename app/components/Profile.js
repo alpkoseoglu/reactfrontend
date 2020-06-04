@@ -34,9 +34,10 @@ function Profile() {
       try {
         const response = await Axios.post(`/profile/${username}`, { token: appState.user.token }, { cancelToken: ourRequest.token })
         setState((draft) => {
+          draft.isLoading = false
+          draft.notFound = false
           if (response.data) {
             draft.profileData = response.data
-            draft.isLoading = false
           } else {
             draft.notFound = true
           }
@@ -117,16 +118,16 @@ function Profile() {
     })
   }
 
+  if (!state.isLoading && state.notFound) {
+    return <NotFound />
+  }
+
   if (state.isLoading)
     return (
       <Page>
         <LoadingDotsIcon />
       </Page>
     )
-
-  if (state.notFound) {
-    return <NotFound />
-  }
 
   return (
     <Page title={`${username}'s Profile`}>
