@@ -26,7 +26,7 @@ function CreatePost(props) {
 
   useEffect(() => {
     if (wasSuccessful) {
-      appDispatch({ type: "flashMessage", value: "Congrats, you created a new post." })
+      appDispatch({ type: "flashMessage", value: "Congrats, you created a new post.", color: "alert-primary" })
     }
   }, [wasSuccessful])
   if (wasSuccessful) {

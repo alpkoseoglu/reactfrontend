@@ -59,7 +59,7 @@ function ViewSinglePost() {
   }, [deleteAttemptCount])
 
   if (deleteWasSuccessful) {
-    appDispatch({ type: "flashMessage", value: "Post was successfully deleted!" })
+    appDispatch({ type: "flashMessage", value: "Post was successfully deleted!", color: "alert-primary" })
     return <Redirect to={`/profile/${appState.user.username}`} />
   }
 

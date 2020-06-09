@@ -116,7 +116,7 @@ function ViewSinglePost() {
         try {
           const response = await Axios.post(`/post/${state.id}/edit`, { title: state.title.value, body: state.body.value, token: appState.user.token }, { cancelToken: ourRequest.token })
           dispatch({ type: "saveRequestFinihed" })
-          appDispatch({ type: "flashMessage", value: "Post Successfully Updated." })
+          appDispatch({ type: "flashMessage", value: "Post Successfully Updated.", color: "alert-success" })
         } catch (e) {
           console.log("There was a problem or the request was canceled")
         }
@@ -133,7 +133,7 @@ function ViewSinglePost() {
   }
 
   if (state.permisionProblem) {
-    appDispatch({ type: "flashMessage", value: "You DON'T have permission to edit this post!" })
+    appDispatch({ type: "flashMessage", value: "You DON'T have permission to edit this post!", color: "alert-danger" })
     return <Redirect to="/" />
   }
 

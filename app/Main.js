@@ -51,7 +51,7 @@ function Main() {
         draft.loggedIn = false
         break
       case "flashMessage":
-        draft.flashMessages.push(action.value)
+        draft.flashMessages.push([action.value, action.color])
         break
       case "openSearch":
         draft.isSearchOpen = true
@@ -97,7 +97,7 @@ function Main() {
           const response = await Axios.post("/checkToken", { token: state.user.token }, { cancelToken: ourRequest.token })
           if (!response.data) {
             dispatch({ type: "logout" })
-            dispatch({ type: "flashMessage", value: "Your session is expired. Please log in again." })
+            dispatch({ type: "flashMessage", value: "Your session is expired. Please log in again.", color: "alert-secondary" })
           }
         } catch (e) {
           console.log("There was a problem or request was canceled!")
